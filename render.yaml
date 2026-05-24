@@ -1,0 +1,17 @@
+services:
+  # ── Bot Telegram (background worker) ────────────────────────────────────────
+  - type: worker
+    name: altcoin-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    plan: free
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false          # Điền thủ công trên Render dashboard
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: TIMEFRAME
+        value: 1h
+      - key: SCAN_INTERVAL
+        value: "300"
