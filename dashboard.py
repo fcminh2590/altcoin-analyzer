@@ -29,8 +29,18 @@ st.markdown("""<style>
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.title("⚙️ Cài đặt")
-    coin = st.selectbox("🪙 Coin", WATCHLIST)
-    tf   = st.selectbox("⏱ Timeframe", ["1m","5m","15m","30m","1h","4h","1d"], index=4)
+    st.markdown("**🪙 Chọn coin**")
+    coin_mode = st.radio("", ["Danh sách có sẵn", "Tìm kiếm bất kỳ"], horizontal=True, label_visibility="collapsed")
+
+    if coin_mode == "Danh sách có sẵn":
+        coin = st.selectbox("", WATCHLIST, label_visibility="collapsed")
+    else:
+        custom = st.text_input("Nhập tên coin (VD: PEPEUSDT, SHIBUSDT...)", value="BTCUSDT").strip().upper()
+        if not custom.endswith("USDT"):
+            custom = custom + "USDT"
+        coin = custom
+        st.caption(f"Sẽ tìm: **{coin}**")
+    tf   = st.selectbox("⏱ Timeframe", ["1m","5m","15m","30m","1h","4h","1d","1w","1M"], index=4)
 
     st.markdown("**Overlay giá:**")
     show_ema = st.checkbox("EMA 9/21/50/200", True)
